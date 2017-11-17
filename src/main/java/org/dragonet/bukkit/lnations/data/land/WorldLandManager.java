@@ -59,6 +59,7 @@ public class WorldLandManager {
      */
     public boolean claimLand(int chunkX, int chunkZ, String name) {
         if(getNationName(chunkX, chunkZ) != null) return false;
+        if(!plugin.getNationManager().exists(name)) return false;
         int regionX = chunkX >> 8;
         int regionZ = chunkZ >> 8;
         if(!regions.containsKey(regionX) || !regions.get(regionX).containsKey(regionZ)) {
