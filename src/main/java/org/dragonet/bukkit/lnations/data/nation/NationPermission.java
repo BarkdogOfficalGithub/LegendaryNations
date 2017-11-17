@@ -1,4 +1,4 @@
-package org.dragonet.bukkit.lnations.nation;
+package org.dragonet.bukkit.lnations.data.nation;
 
 /**
  * Created on 2017/11/17.

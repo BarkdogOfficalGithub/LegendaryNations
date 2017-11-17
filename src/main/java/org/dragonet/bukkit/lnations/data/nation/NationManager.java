@@ -1,4 +1,4 @@
-package org.dragonet.bukkit.lnations.nation;
+package org.dragonet.bukkit.lnations.data.nation;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;

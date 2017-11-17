@@ -1,4 +1,4 @@
-package org.dragonet.bukkit.lnations.land;
+package org.dragonet.bukkit.lnations.data.land;
 
 import org.bukkit.Chunk;
 import org.bukkit.configuration.file.YamlConfiguration;

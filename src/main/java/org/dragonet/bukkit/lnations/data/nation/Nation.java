@@ -1,5 +1,6 @@
-package org.dragonet.bukkit.lnations.nation;
+package org.dragonet.bukkit.lnations.data.nation;
 
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
@@ -21,6 +22,8 @@ public class Nation {
     private final File internalFile;
 
     private String name;
+
+    private Material icon;
 
     private UUID leader;
 
@@ -45,6 +48,7 @@ public class Nation {
         this.internalFile = internalFile;
         internalConfiguration = YamlConfiguration.loadConfiguration(internalFile);
         name = internalConfiguration.getString("name");
+        icon = Material.valueOf(internalConfiguration.getString("icon"));
         leader = UUID.fromString(internalConfiguration.getString("leader"));
         generalPublicPermissions = new HashSet<>();
         generalMemberPermissions = new HashSet<>();
@@ -58,6 +62,7 @@ public class Nation {
     }
 
     public String getName() {
+        last_access_time = System.currentTimeMillis();
         return name;
     }
 
@@ -67,11 +72,22 @@ public class Nation {
     }
 
     public UUID getLeader() {
+        last_access_time = System.currentTimeMillis();
         return leader;
     }
 
     public void setLeader(UUID leader) {
         this.leader = leader;
+        markChanged();
+    }
+
+    public Material getIcon() {
+        last_access_time = System.currentTimeMillis();
+        return icon;
+    }
+
+    public void setIcon(Material icon) {
+        this.icon = icon;
         markChanged();
     }
 
@@ -223,6 +239,7 @@ public class Nation {
     public static YamlConfiguration initializeNation(String name, UUID leader) {
         YamlConfiguration configuration = new YamlConfiguration();
         configuration.set("name", name);
+        configuration.set("icon", Material.FENCE.name());
         configuration.set("leader", leader.toString());
         MemorySection.createPath(configuration, "members");
         MemorySection.createPath(configuration, "claims");

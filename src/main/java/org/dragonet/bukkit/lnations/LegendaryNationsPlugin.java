@@ -3,9 +3,9 @@ package org.dragonet.bukkit.lnations;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.dragonet.bukkit.lnations.land.LandManager;
-import org.dragonet.bukkit.lnations.nation.NationManager;
-import org.dragonet.bukkit.lnations.player.PlayerManager;
+import org.dragonet.bukkit.lnations.data.land.LandManager;
+import org.dragonet.bukkit.lnations.data.nation.NationManager;
+import org.dragonet.bukkit.lnations.data.player.PlayerManager;
 
 import java.io.File;
 

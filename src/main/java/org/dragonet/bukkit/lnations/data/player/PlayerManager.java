@@ -1,4 +1,4 @@
-package org.dragonet.bukkit.lnations.player;
+package org.dragonet.bukkit.lnations.data.player;
 
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -8,6 +8,7 @@ import org.dragonet.bukkit.lnations.LegendaryNationsPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,6 +24,15 @@ public class PlayerManager {
         this.plugin = plugin;
         profilesFolder = new File(plugin.getDataFolder(), "profiles");
         profilesFolder.mkdirs();
+    }
+
+    public List<String> getNations(Player player) {
+        File f = getProfileFile(player);
+        if(!f.exists()) {
+            return Collections.emptyList();
+        }
+        YamlConfiguration configuration = YamlConfiguration.loadConfiguration(f);
+        return configuration.getStringList("nations");
     }
 
     /**

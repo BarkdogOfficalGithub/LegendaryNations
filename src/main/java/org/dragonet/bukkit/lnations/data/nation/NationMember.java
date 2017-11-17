@@ -1,4 +1,4 @@
-package org.dragonet.bukkit.lnations.nation;
+package org.dragonet.bukkit.lnations.data.nation;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
@@ -37,6 +37,10 @@ public class NationMember {
         } else {
             enabledPermissions.remove(permission);
         }
+    }
+
+    public UUID getMemberUniqueId() {
+        return memberUniqueId;
     }
 
     public boolean hasPermission(NationPermission permission) {
