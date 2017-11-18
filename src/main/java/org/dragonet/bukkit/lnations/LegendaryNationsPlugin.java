@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  */
 public class LegendaryNationsPlugin extends JavaPlugin {
 
-    public final static String OVERRID_MODE_METADATA = "legendary-nations-override";
+    public final static String OVERRIDE_MODE_METADATA = "legendary-nations-override";
 
     public final static Pattern NATION_NAME_REGEX = Pattern.compile("^[0-9a-zA-Z_]+$");
 
@@ -46,7 +46,6 @@ public class LegendaryNationsPlugin extends JavaPlugin {
         config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "config.yml"));
         Lang.lang = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "lang.yml"));
 
-
         menus = ((MenuAPIPlugin)getServer().getPluginManager().getPlugin("MenuAPI")).getMenus();
         economy = getServer().getServicesManager().getRegistration(Economy.class).getProvider();
 
@@ -55,7 +54,7 @@ public class LegendaryNationsPlugin extends JavaPlugin {
         playerManager = new PlayerManager(this);
 
         getServer().getPluginManager().registerEvents(landManager, this);
-        getServer().getScheduler().runTaskTimer(this, nationManager, 12000L, 36000L); // clean up task, 10min delay, 60min/time
+        getServer().getScheduler().runTaskTimer(this, nationManager, 20*60*5L, 20*60*5L); // clean up task, 10min delay, 60min/time
 
         // finally, register the command
         getCommand("nation").setExecutor(new NationCommand(this));
@@ -63,6 +62,8 @@ public class LegendaryNationsPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        nationManager.saveAndClear();
+
         instance = null;
     }
 
@@ -92,6 +93,6 @@ public class LegendaryNationsPlugin extends JavaPlugin {
     }
 
     public static boolean isInOverrideMode(HumanEntity player) {
-        return player.hasMetadata(OVERRID_MODE_METADATA);
+        return player.hasMetadata(OVERRIDE_MODE_METADATA);
     }
 }

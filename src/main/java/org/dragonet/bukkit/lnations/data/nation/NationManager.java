@@ -65,6 +65,11 @@ public final class NationManager implements Listener, Runnable {
         return getNation(name);
     }
 
+    public void saveAndClear() {
+        run();
+        nationCache.clear();
+    }
+
     /**
      * clean up task
      * 30min no access before remove
@@ -74,8 +79,10 @@ public final class NationManager implements Listener, Runnable {
         Iterator<Map.Entry<String, Nation>> iterator = nationCache.entrySet().iterator();
         while(iterator.hasNext()) {
             Map.Entry<String, Nation> c = iterator.next();
-            if(System.currentTimeMillis() - c.getValue().last_access_time > 1000L * 60L * 30L) {
+            if(c.getValue().isChanged()) {
                 c.getValue().saveConfiguration();
+            }
+            if(System.currentTimeMillis() - c.getValue().last_access_time > 1000L * 60L * 10L) {
                 iterator.remove();
             }
         }

@@ -1,52 +1,85 @@
-prefix: "&d[&6&lLegendaryNations&d]"
-prefix-list: "&6==== %s &6===="
+prefix: "\u00a7d[\u00a76LegendaryNations\u00a7d]"
+prefix-list: "\u00a76==== %s \u00a76===="
 
-override-notice: "&dYou're doing this in override mode! "
+override-notice: "\u00a7You're doing this in override mode! "
 
 help:
-  - "&bAlias: &aYou can use &e/nation &aor &e/n"
-  - "&d/nation &8- &3show this help"
-  - "&d/nation my &8- &3see what nations you belong to"
-  - "&d/nation create <name> &8- &3creates a nation"
-  - "&d/nation land &8- &3opens a GUI to manage your lands"
-  - "&d/nation member <add/remove> <username> &8- &3add or remove members"
-  - "&d/nation perms <public/member> &8- &3manage general permissions"
-  - "&d/nation perm <member username> &8- &3manage a member's permission"
-  - "&d/nation settp &8- &3set nation's teleport point"
-  - "&d/nation tp <nation name> &8- &3teleport to a nation"
+  - "\u00a7bAlias: \u00a7aYou can use \u00a7e/nation \u00a7aor \u00a7e/n"
+  - "\u00a7d/nation \u00a78- \u00a73show this help"
+  - "\u00a7d/nation my \u00a78- \u00a73see what nations you belong to"
+  - "\u00a7d/nation create <name> \u00a78- \u00a73creates a nation"
+  - "\u00a7d/nation icon\u00a78- \u00a73change a nation's icon"
+  - "\u00a7d/nation display <display name> \u00a78- \u00a73 change display name"
+  - "\u00a7d/nation manage \u00a78- \u00a73opens a GUI to manage your nations"
+  - "\u00a7d/nation land \u00a78- \u00a73opens a GUI to manage your lands"
+  - "\u00a7d/nation member <add/remove> <username> \u00a78- \u00a73add or remove members"
+  - "\u00a7d/nation perms <public/member> \u00a78- \u00a73manage general permissions"
+  - "\u00a7d/nation perm <member username> \u00a78- \u00a73manage a member's permission"
+  - "\u00a7d/nation settp \u00a78- \u00a73set nation's teleport point"
+  - "\u00a7d/nation tp <nation name> \u00a78- \u00a73teleport to a nation"
 
 usage:
-  create: "&eUsage: &d/nation create <name>"
+  create: "\u00a7eUsage: \u00a7/nation create <name>"
 
-insufficient-money: "&cInsufficient money! You need &e%.2f &c. "
+insufficient-money: "\u00a7cInsufficient money! You need \u00a7e%.2f \u00a7c. "
 
 confirmation:
-  title: "&4Confirmation Window"
-  option-yes: "&aYES"
-  option-no: "&cNO"
-  cancelled: "&cCancelled! "
+  title: "\u00a74Confirmation Window"
+  option-yes: "\u00a7aYES"
+  option-no: "\u00a7cNO"
+  cancelled: "\u00a7cCancelled! "
+
+permissions:
+  MANAGE_LAND: "\u00a73Allows to claim/unclaim lands for your nation"
+  BUILD: "\u00a73Allows to build and destroy blocks"
 
 my:
-  belong-to: "&eYou belong to following nations: "
-  as-member: "&d&l%s "
-  as-leader: "&c&l%s&8(&dleader&8) "
+  belong-to: "\u00a7eYou belong to following nations: "
+  as-member: "\u00a7\u00a7l%s "
+  as-leader: "\u00a7c\u00a7l%s\u00a78(\u00a7leader\u00a78) "
 
 creation:
-  illegal-name: "&cNation names can only contains alphabets, numbers and underscores! "
+  illegal-name: "\u00a7cNation names can only contains alphabets, numbers and underscores! "
   success:
-    - "&aSuccess! "
-    - "&aYou can now claim lands using &e/n land &a, "
-    - "&aor change a icon on map using &e/n icon &a. "
+    - "\u00a7aSuccess! "
+    - "\u00a7aYou can now claim lands using \u00a7e/n land \u00a7a, "
+    - "\u00a7aor change a icon on map using \u00a7e/n icon \u00a7a. "
+
+manage:
+  no-permission-button-suffix: "\u00a7c(no permission)"
+  no-permission: "\u00a7cYou have no permission to do this to your nation. "
+  gui:
+    choose-nation: "\u00a70Choose a nation"
+    manage: "\u00a71Nation \u00a74%s"
+    options:
+      change-display-name:
+        button: "\u00a7bChange Display Name"
+        lore:
+          - "\u00a73by using command: "
+          - "\u00a7e/n display <\u00a7ddisplay name\u00a7e>"
+      change-icon:
+        button: "\u00a7bChange Icon"
+        lore:
+          - "\u00a73Change a icon for your nation. "
+          - "\u00a73It displays on land maps too! "
+      manage-land:
+        button: "\u00a7bManage Lands"
+        lore:
+          - "\u00a73Claim lands or un-claim them. "
+          - "\u00a73Un-claiming will \u00a7cNOT \u00a73return your money! "
 
 land:
-  no-nation: "&cYou don't have a nation to manage, try &d/n create"
+  no-nation: "\u00a7cYou don't have a nation to manage, try \u00a7/n create"
+  no-permission: "\u00a7cYou don't have permission to manage lands for this nation. "
   gui:
-    choose-nation: "&6Choose a nation"
-    wilderness: "&2Wilderness"
-    manage: "&bManage Lands"
+    choose-nation: "\u00a70Choose a nation"
+    nation-permitted: "\u00a7a%s"
+    nation-unavailable: "\u00a78%s (\u00a7cno permission\u00a78)"
+    wilderness: "\u00a72Wilderness"
+    manage: "\u00a70Manage Lands \u00a78of \u00a73%s"
     claim-lore:
-      - "&dLeft click to claim this land"
+      - "\u00a7aLeft click to claim this land"
   claim:
-    duplicated: "&cThat land is already claimed by a nation! "
-    success: "&aSuccessfully claimed land (%d, %d) for nation <&e%s&a>! "
+    duplicated: "\u00a7cThat land is already claimed by a nation! "
+    success: "\u00a7aSuccessfully claimed land (%d, %d) for nation <\u00a7e%s\u00a7a>! "
 

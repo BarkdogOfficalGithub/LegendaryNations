@@ -24,6 +24,8 @@ public class Nation {
 
     private String name;
 
+    private String displayName;
+
     private Material icon;
 
     private UUID leader;
@@ -49,6 +51,7 @@ public class Nation {
         this.internalFile = internalFile;
         internalConfiguration = YamlConfiguration.loadConfiguration(internalFile);
         name = internalConfiguration.getString("name");
+        displayName = internalConfiguration.getString("display-name");
         icon = Material.valueOf(internalConfiguration.getString("icon"));
         leader = UUID.fromString(internalConfiguration.getString("leader"));
         generalPublicPermissions = new HashSet<>();
@@ -133,60 +136,7 @@ public class Nation {
         member.markChanged();
         members.put(player.getUniqueId(), member);
         LegendaryNationsPlugin.getInstance().getPlayerManager().addToNation(player, name);
-        return true;
-    }
-
-    public boolean checkLand(World world, int chunkX, int chunkZ) {
-        String key = claimKey(world, chunkX);
-        if(!claims.contains(key)) return false;
-        return claims.getIntegerList(key).contains(chunkZ);
-    }
-
-    /**
-     * claims a lnations for this nation
-     * @param world
-     * @param chunkX
-     * @param chunkZ
-     * @return true when success, false when already claimed or error
-     */
-    public boolean claimLand(World world, int chunkX, int chunkZ) {
-        last_access_time = System.currentTimeMillis();
-        if(checkLand(world, chunkX, chunkZ)) return false;
-        markChanged();
-        List<Integer> zs = new LinkedList<>();
-        String key = claimKey(world, chunkX);
-        if(claims.contains(key)) {
-            zs.addAll(claims.getIntegerList(key));
-        }
-        zs.add(chunkZ);
-        claims.set(key, zs);
-        LegendaryNationsPlugin.getInstance().getLandManager().getWorldManager(world).claimLand(chunkX, chunkZ, name.toLowerCase());
-        return true;
-    }
-
-    /**
-     * un-claims a lnations
-     * @param world
-     * @param chunkX
-     * @param chunkZ
-     * @return true when success, false when not claimed or error
-     */
-    public boolean unclaimLand(World world, int chunkX, int chunkZ) {
-        last_access_time = System.currentTimeMillis();
-        if(!checkLand(world, chunkX, chunkZ)) return false;
-        markChanged();
-        List<Integer> zs = new LinkedList<>();
-        String key = claimKey(world, chunkX);
-        if(claims.contains(key)) {
-            zs.addAll(claims.getIntegerList(key));
-        }
-        zs.remove(chunkZ);
-        if(zs.size() <= 0) {
-            claims.set(key, null);
-        } else {
-            claims.set(key, zs);
-        }
-        LegendaryNationsPlugin.getInstance().getLandManager().getWorldManager(world).unclaimLand(chunkX, chunkZ);
+        saveConfiguration();
         return true;
     }
 
@@ -202,8 +152,59 @@ public class Nation {
         internalConfiguration.set("members." + player.getUniqueId(), null);
         members.remove(player.getUniqueId());
         LegendaryNationsPlugin.getInstance().getPlayerManager().removeFromNation(player, name);
+        saveConfiguration();
         return true;
     }
+
+    public boolean checkLand(World world, int chunkX, int chunkZ) {
+        String key = claimKey(world, chunkX, chunkZ);
+        if(!claims.contains(key)) return false;
+        return true;
+    }
+
+    /**
+     * claims a nations for this nation
+     * @param world
+     * @param chunkX
+     * @param chunkZ
+     * @return true when success, false when already claimed or error
+     */
+    public boolean claimLand(World world, int chunkX, int chunkZ) {
+        last_access_time = System.currentTimeMillis();
+        if(checkLand(world, chunkX, chunkZ)) return false;
+        markChanged();
+        String key = claimKey(world, chunkX, chunkZ);
+        if(claims.contains(key)) {
+            return false;
+        }
+        claims.set(key, true);
+        LegendaryNationsPlugin.getInstance().getLandManager().getWorldManager(world).claimLand(chunkX, chunkZ, name.toLowerCase());
+        saveConfiguration();
+        return true;
+    }
+
+    /**
+     * un-claims a nations
+     * @param world
+     * @param chunkX
+     * @param chunkZ
+     * @return true when success, false when not claimed or error
+     */
+    public boolean unclaimLand(World world, int chunkX, int chunkZ) {
+        last_access_time = System.currentTimeMillis();
+        if(!checkLand(world, chunkX, chunkZ)) return false;
+        markChanged();
+        String key = claimKey(world, chunkX, chunkZ);
+        if(!claims.contains(key)) {
+            return false;
+        }
+        claims.set(key, null);
+        LegendaryNationsPlugin.getInstance().getLandManager().getWorldManager(world).unclaimLand(chunkX, chunkZ);
+        saveConfiguration();
+        return true;
+    }
+
+
 
     public boolean hasPermission(Player player, NationPermission permission) {
         last_access_time = System.currentTimeMillis();
@@ -218,12 +219,17 @@ public class Nation {
         changed = true;
     }
 
+    public boolean isChanged() {
+        return changed;
+    }
+
     public boolean saveConfiguration() {
         if(!changed) {
             System.out.println("Not saving nation <" + name + "> because not changed! ");
             return true;
         }
         internalConfiguration.set("name", name);
+        internalConfiguration.set("display-name", displayName);
         internalConfiguration.set("leader", leader.toString());
         members.values().forEach((c) -> {
             // this will update ConfigurationSection
@@ -233,9 +239,10 @@ public class Nation {
         List<String> generalMemberPermissionStrings = generalMemberPermissions.stream().map(Enum::name).collect(Collectors.toCollection(LinkedList::new));
         internalConfiguration.set("general-permissions.public", generalPublicPermissionStrings);
         internalConfiguration.set("general-permissions.member", generalMemberPermissionStrings);
-        // claims is a section so no need to take care of that
+        internalConfiguration.set("claims", claims);
         try {
             internalConfiguration.save(internalFile);
+            changed = false;
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -244,16 +251,27 @@ public class Nation {
     }
 
     public static YamlConfiguration initializeNation(String name, UUID leader) {
+        final Material[] default_icons = new Material[] {
+                Material.BEETROOT,
+                Material.APPLE,
+                Material.RAW_BEEF,
+                Material.MUTTON,
+                Material.CAKE,
+                Material.BREAD,
+                Material.FURNACE,
+                Material.BEACON
+        };
         YamlConfiguration configuration = new YamlConfiguration();
         configuration.set("name", name);
-        configuration.set("icon", Material.FENCE.name());
+        configuration.set("display-name", name);
+        configuration.set("icon", default_icons[Math.abs(name.hashCode()) % default_icons.length].name());
         configuration.set("leader", leader.toString());
         configuration.set("members", EmptyValues.MAP);
-        configuration.set("claims", EmptyValues.STRING_LIST);
+        configuration.set("claims", EmptyValues.MAP);
         return configuration;
     }
 
-    public static String claimKey(World world, int chunkX) {
-        return world.getUID().toString() + "." + chunkX;
+    public static String claimKey(World world, int chunkX, int chunkZ) {
+        return world.getUID().toString() + ".chunk_" + chunkX + "_" + chunkZ;
     }
 }

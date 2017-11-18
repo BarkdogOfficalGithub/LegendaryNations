@@ -237,6 +237,6 @@ public class WorldLandManager {
     }
 
     public static String chunkKey(int chunkX, int chunkZ) {
-        return String.format("chunk-%d-%d", chunkX, chunkZ);
+        return String.format("c_%d_%d", chunkX, chunkZ);
     }
 }

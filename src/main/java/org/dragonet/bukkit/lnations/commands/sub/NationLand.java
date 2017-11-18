@@ -8,9 +8,9 @@ import org.bukkit.entity.Player;
 import org.dragonet.bukkit.lnations.Lang;
 import org.dragonet.bukkit.lnations.LegendaryNationsPlugin;
 import org.dragonet.bukkit.lnations.commands.NationSubCommand;
-import org.dragonet.bukkit.lnations.data.land.LandManager;
 import org.dragonet.bukkit.lnations.data.land.WorldLandManager;
 import org.dragonet.bukkit.lnations.data.nation.Nation;
+import org.dragonet.bukkit.lnations.data.nation.NationPermission;
 import org.dragonet.bukkit.menuapi.ItemMenu;
 import org.dragonet.bukkit.menuapi.ItemMenuInstance;
 
@@ -31,15 +31,21 @@ public class NationLand implements NationSubCommand {
         ItemMenuInstance menuInstance = new ItemMenuInstance(Lang.build("land.gui.choose-nation"), nations.size());
         for(int i = 0; i < nations.size(); i++) {
             Nation n = nations.get(i);
-            menuInstance.setButton(i, n.getIcon(), n.getName(), ((humanEntity, itemMenuInstance) -> {
-                openLandMenu(player, n, player.getWorld());
-            }));
+            if(n.hasPermission(player, NationPermission.MANAGE_LAND)) {
+                menuInstance.setButton(i, n.getIcon(), Lang.build("land.gui.nation-permitted", n.getName()), ((humanEntity, itemMenuInstance) -> {
+                    openLandMenu(player, n, player.getWorld());
+                }));
+            } else {
+                menuInstance.setButton(i, n.getIcon(), Lang.build("land.gui.nation-unavailable", n.getName()), ((humanEntity, itemMenuInstance) -> {
+                    Lang.sendMessage(player, "lang.no-permission");
+                }));
+            }
         }
         LegendaryNationsPlugin.getInstance().getMenus().open(player, menuInstance);
     }
 
-    public void openLandMenu(Player player, Nation n, World world) {
-        ItemMenuInstance gui = new ItemMenuInstance(Lang.build("land.gui.manage"), 5*9);
+    public static void openLandMenu(Player player, Nation n, World world) {
+        ItemMenuInstance gui = new ItemMenuInstance(Lang.build("land.gui.manage", n.getName()), 5*9);
         int playerChunkX = player.getLocation().getChunk().getX();
         int playerChunkZ = player.getLocation().getChunk().getZ();
         WorldLandManager wlm = LegendaryNationsPlugin.getInstance().getLandManager().getWorldManager(world);
@@ -51,11 +57,11 @@ public class NationLand implements NationSubCommand {
                 Nation landNation = wlm.getNationAt(cx, cz);
                 if(landNation == null) {
                     gui.setButton(guiIndex, Material.DIRT, Lang.build("land.gui.wilderness"), Lang.getStringList("land.gui.claim-lore"),
-                            new ClaimRequestHandler(player, n, world, playerChunkX, playerChunkZ));
+                            new ClaimRequestHandler(player, n, world, cx, cz));
                 } else {
-                    gui.setButton(guiIndex, landNation.getIcon(), landNation.getName(), ((humanEntity, itemMenuInstance) -> {
-                        Lang.sendMessage(player, "land.claim.duplicated");
-                    }));
+                    gui.setButton(guiIndex, landNation.getIcon(), landNation.getName(), ((humanEntity, itemMenuInstance) ->
+                        Lang.sendMessage(player, "land.claim.duplicated")
+                    ));
                 }
             }
         }
@@ -81,7 +87,7 @@ public class NationLand implements NationSubCommand {
         @Override
         public void onClick(HumanEntity humanEntity, ItemMenuInstance itemMenuInstance) {
             if(LegendaryNationsPlugin.getInstance().getLandManager().getWorldManager(world).getNationName(chunkX, chunkZ) != null) {
-                Lang.sendMessage(humanEntity, "land.gui.claim.duplicated");
+                Lang.sendMessage(humanEntity, "land.claim.duplicated");
                 return;
             }
 
@@ -101,6 +107,9 @@ public class NationLand implements NationSubCommand {
             wlm.claimLand(chunkX, chunkZ, nation.getName());
 
             Lang.sendMessage(player, "land.claim.success", chunkX, chunkZ, nation.getName());
+
+            humanEntity.closeInventory();
+            openLandMenu(player, nation, world);
         }
     }
 }
