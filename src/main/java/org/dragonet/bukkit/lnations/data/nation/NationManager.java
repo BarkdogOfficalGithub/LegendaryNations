@@ -61,6 +61,7 @@ public final class NationManager implements Listener, Runnable {
             leader.sendMessage("\u00a7cERROR");
             return null;
         }
+        plugin.getPlayerManager().addToNation(leader, name);
         return getNation(name);
     }
 

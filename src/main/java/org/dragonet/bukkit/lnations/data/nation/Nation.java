@@ -6,6 +6,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.dragonet.bukkit.lnations.EmptyValues;
 import org.dragonet.bukkit.lnations.LegendaryNationsPlugin;
 
 import java.io.File;
@@ -77,7 +78,13 @@ public class Nation {
     }
 
     public void setLeader(UUID leader) {
+        if(this.leader != null) {
+            // remove previous leader
+            Player player = LegendaryNationsPlugin.getInstance().getServer().getPlayer(leader);
+            LegendaryNationsPlugin.getInstance().getPlayerManager().removeFromNation(player, name);
+        }
         this.leader = leader;
+        LegendaryNationsPlugin.getInstance().getPlayerManager().addToNation(LegendaryNationsPlugin.getInstance().getServer().getPlayer(leader), name);
         markChanged();
     }
 
@@ -241,8 +248,8 @@ public class Nation {
         configuration.set("name", name);
         configuration.set("icon", Material.FENCE.name());
         configuration.set("leader", leader.toString());
-        MemorySection.createPath(configuration, "members");
-        MemorySection.createPath(configuration, "claims");
+        configuration.set("members", EmptyValues.MAP);
+        configuration.set("claims", EmptyValues.STRING_LIST);
         return configuration;
     }
 

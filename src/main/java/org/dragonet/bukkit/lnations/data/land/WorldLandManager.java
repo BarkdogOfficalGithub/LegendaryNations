@@ -4,6 +4,7 @@ import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.dragonet.bukkit.lnations.LegendaryNationsPlugin;
+import org.dragonet.bukkit.lnations.data.nation.Nation;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,6 +49,23 @@ public class WorldLandManager {
         } else {
             return regions.get(regionX).get(regionZ).getChunkNation(chunkX, chunkZ);
         }
+    }
+
+    /**
+     * Gets the nation where it belongs to
+     * @param chunkX
+     * @param chunkZ
+     * @return
+     */
+    public Nation getNationAt(int chunkX, int chunkZ) {
+        String name = getNationName(chunkX, chunkZ);
+        if(name == null) return null;
+        Nation nation = LegendaryNationsPlugin.getInstance().getNationManager().getNation(name);
+        if(nation == null) {
+            // weird
+            unclaimLand(chunkX, chunkZ);
+        }
+        return nation;
     }
 
     /**
@@ -168,7 +186,7 @@ public class WorldLandManager {
         int regionX = chunk.getX() >> 8;
         int regionZ = chunk.getZ() >> 8;
         if(!regions.containsKey(regionX) || !regions.get(regionX).containsKey(regionZ)) {
-            plugin.getLogger().warning("Strange, chunk not managed? ");
+            // plugin.getLogger().warning("Strange, chunk not managed? ");
             return;
         }
         CachedRegion cache = regions.get(regionX).get(regionZ);

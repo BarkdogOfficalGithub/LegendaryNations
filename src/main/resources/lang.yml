@@ -1,0 +1,52 @@
+prefix: "&d[&6&lLegendaryNations&d]"
+prefix-list: "&6==== %s &6===="
+
+override-notice: "&dYou're doing this in override mode! "
+
+help:
+  - "&bAlias: &aYou can use &e/nation &aor &e/n"
+  - "&d/nation &8- &3show this help"
+  - "&d/nation my &8- &3see what nations you belong to"
+  - "&d/nation create <name> &8- &3creates a nation"
+  - "&d/nation land &8- &3opens a GUI to manage your lands"
+  - "&d/nation member <add/remove> <username> &8- &3add or remove members"
+  - "&d/nation perms <public/member> &8- &3manage general permissions"
+  - "&d/nation perm <member username> &8- &3manage a member's permission"
+  - "&d/nation settp &8- &3set nation's teleport point"
+  - "&d/nation tp <nation name> &8- &3teleport to a nation"
+
+usage:
+  create: "&eUsage: &d/nation create <name>"
+
+insufficient-money: "&cInsufficient money! You need &e%.2f &c. "
+
+confirmation:
+  title: "&4Confirmation Window"
+  option-yes: "&aYES"
+  option-no: "&cNO"
+  cancelled: "&cCancelled! "
+
+my:
+  belong-to: "&eYou belong to following nations: "
+  as-member: "&d&l%s "
+  as-leader: "&c&l%s&8(&dleader&8) "
+
+creation:
+  illegal-name: "&cNation names can only contains alphabets, numbers and underscores! "
+  success:
+    - "&aSuccess! "
+    - "&aYou can now claim lands using &e/n land &a, "
+    - "&aor change a icon on map using &e/n icon &a. "
+
+land:
+  no-nation: "&cYou don't have a nation to manage, try &d/n create"
+  gui:
+    choose-nation: "&6Choose a nation"
+    wilderness: "&2Wilderness"
+    manage: "&bManage Lands"
+    claim-lore:
+      - "&dLeft click to claim this land"
+  claim:
+    duplicated: "&cThat land is already claimed by a nation! "
+    success: "&aSuccessfully claimed land (%d, %d) for nation <&e%s&a>! "
+

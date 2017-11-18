@@ -62,7 +62,8 @@ public class NationMember {
 
     public static ConfigurationSection initializeNationMember(UUID player) {
         YamlConfiguration section = new YamlConfiguration();
-        MemorySection.createPath(section, "enabled-permissions");
+        List<String> str = Collections.emptyList();
+        section.set("enabled-permissions", str);
         return section;
     }
 }

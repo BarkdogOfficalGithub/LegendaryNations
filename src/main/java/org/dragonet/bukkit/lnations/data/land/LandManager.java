@@ -4,6 +4,7 @@ import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.event.world.WorldLoadEvent;
@@ -45,18 +46,30 @@ public class LandManager implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     private void onWorldUnload(WorldUnloadEvent e) {
         WorldLandManager w = worlds.remove(e.getWorld().getUID());
+        if(w == null) return;
         w.cleanAndSave();
+        worlds.remove(e.getWorld().getUID());
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     private void onChunkLoad(ChunkLoadEvent e) {
         WorldLandManager w = worlds.get(e.getWorld().getUID());
+        if(w == null) return;
         w.onChunkLoad(e.getChunk());
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     private void onChunkUnload(ChunkUnloadEvent e) {
         WorldLandManager w = worlds.get(e.getWorld().getUID());
+        if(w == null) return;
         w.onChunkUnload(e.getChunk());
+    }
+
+    @EventHandler
+    private void onPlayerJoin(PlayerJoinEvent e) {
+        if(worlds.containsKey(e.getPlayer().getWorld().getUID())) return;
+        File file = new File(regionsFolder, e.getPlayer().getWorld().getName());
+        file.mkdirs();
+        worlds.put(e.getPlayer().getWorld().getUID(), new WorldLandManager(e.getPlayer().getWorld(), plugin, file));
     }
 }

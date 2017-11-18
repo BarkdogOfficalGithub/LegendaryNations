@@ -1,5 +1,9 @@
 
+# LegendaryNations configuration
+
 cost:
+  # how much to create a nation?
   nation: 100.0
+  # how much to claim a land/chunk?
   land: 400.0
 

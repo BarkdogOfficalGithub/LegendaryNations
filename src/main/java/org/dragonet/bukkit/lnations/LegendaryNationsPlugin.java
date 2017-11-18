@@ -2,17 +2,26 @@ package org.dragonet.bukkit.lnations;
 
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.dragonet.bukkit.lnations.commands.NationCommand;
 import org.dragonet.bukkit.lnations.data.land.LandManager;
 import org.dragonet.bukkit.lnations.data.nation.NationManager;
 import org.dragonet.bukkit.lnations.data.player.PlayerManager;
+import org.dragonet.bukkit.menuapi.ItemMenu;
+import org.dragonet.bukkit.menuapi.MenuAPIPlugin;
 
 import java.io.File;
+import java.util.regex.Pattern;
 
 /**
  * Created on 2017/11/17.
  */
 public class LegendaryNationsPlugin extends JavaPlugin {
+
+    public final static String OVERRID_MODE_METADATA = "legendary-nations-override";
+
+    public final static Pattern NATION_NAME_REGEX = Pattern.compile("^[0-9a-zA-Z_]+$");
 
     private static LegendaryNationsPlugin instance;
 
@@ -20,6 +29,7 @@ public class LegendaryNationsPlugin extends JavaPlugin {
         return instance;
     }
 
+    private ItemMenu menus;
     private Economy economy;
 
     private YamlConfiguration config;
@@ -37,6 +47,7 @@ public class LegendaryNationsPlugin extends JavaPlugin {
         Lang.lang = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "lang.yml"));
 
 
+        menus = ((MenuAPIPlugin)getServer().getPluginManager().getPlugin("MenuAPI")).getMenus();
         economy = getServer().getServicesManager().getRegistration(Economy.class).getProvider();
 
         landManager = new LandManager(this);
@@ -45,6 +56,9 @@ public class LegendaryNationsPlugin extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(landManager, this);
         getServer().getScheduler().runTaskTimer(this, nationManager, 12000L, 36000L); // clean up task, 10min delay, 60min/time
+
+        // finally, register the command
+        getCommand("nation").setExecutor(new NationCommand(this));
     }
 
     @Override
@@ -55,6 +69,10 @@ public class LegendaryNationsPlugin extends JavaPlugin {
     @Override
     public YamlConfiguration getConfig() {
         return config;
+    }
+
+    public ItemMenu getMenus() {
+        return menus;
     }
 
     public Economy getEconomy() {
@@ -71,5 +89,9 @@ public class LegendaryNationsPlugin extends JavaPlugin {
 
     public PlayerManager getPlayerManager() {
         return playerManager;
+    }
+
+    public static boolean isInOverrideMode(HumanEntity player) {
+        return player.hasMetadata(OVERRID_MODE_METADATA);
     }
 }
