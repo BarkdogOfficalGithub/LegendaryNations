@@ -36,7 +36,7 @@ permissions:
 my:
   belong-to: "\u00a7eYou belong to following nations: "
   as-member: "\u00a7\u00a7l%s "
-  as-leader: "\u00a7c\u00a7l%s\u00a78(\u00a7leader\u00a78) "
+  as-leader: "\u00a7c\u00a7l%s\u00a78(\u00a7cleader\u00a78) "
 
 creation:
   illegal-name: "\u00a7cNation names can only contains alphabets, numbers and underscores! "
