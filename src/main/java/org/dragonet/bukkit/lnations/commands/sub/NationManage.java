@@ -27,6 +27,7 @@ public class NationManage implements NationSubCommand {
         for(int i = 0; i < nations.size(); i++) {
             Nation n = nations.get(i);
             menuInstance.setButton(i, n.getIcon(), n.getName(), ((humanEntity, itemMenuInstance) -> {
+                player.closeInventory();
                 openManagerMenu(player, n);
             }));
         }
@@ -55,15 +56,17 @@ public class NationManage implements NationSubCommand {
                 Lang.sendMessage(player, "manage.no-permission");
             }));
         }
-        if(nation.hasPermission(player, NationPermission.CHANGE_ICON)) {
+        if(nation.hasPermission(player, NationPermission.MANAGE_LAND)) {
             menu.setButton(2, Material.FENCE, Lang.build("manage.gui.options.manage-land.button"), Lang.getStringList("manage.gui.options.manage-land.lore"), ((humanEntity, itemMenuInstance) -> {
                 player.closeInventory();
-
+                NationLand.openLandMenu(player, nation, player.getWorld());
             }));
         } else {
             menu.setButton(2, Material.FENCE, Lang.build("manage.gui.options.manage-land.button") + Lang.build("manage.no-permission-button-suffix"), Lang.getStringList("manage.gui.options.manage-land.lore"), ((humanEntity, itemMenuInstance) -> {
+                player.closeInventory();
                 Lang.sendMessage(player, "manage.no-permission");
             }));
         }
+        LegendaryNationsPlugin.getInstance().getMenus().open(player, menu);
     }
 }

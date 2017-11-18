@@ -15,4 +15,7 @@ public enum NationPermission {
 
     INTERACT,
 
+    PVP,
+
+    MOB_DAMAGE
 }
