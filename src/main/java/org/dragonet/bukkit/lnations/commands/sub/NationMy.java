@@ -20,7 +20,7 @@ public class NationMy implements NationSubCommand {
         String message = "";
         for(String name : nation_names) {
             Nation n = LegendaryNationsPlugin.getInstance().getNationManager().getNation(name);
-            if(n == null) {
+            if(n == null /*|| !n.isMember(player)*/) {
                 LegendaryNationsPlugin.getInstance().getPlayerManager().removeFromNation(player, name);
                 continue;
             }

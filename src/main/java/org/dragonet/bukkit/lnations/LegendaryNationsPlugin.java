@@ -53,16 +53,20 @@ public class LegendaryNationsPlugin extends JavaPlugin {
         nationManager = new NationManager(this);
         playerManager = new PlayerManager(this);
 
+        getServer().getPluginManager().registerEvents(playerManager, this);
         getServer().getPluginManager().registerEvents(landManager, this);
         getServer().getScheduler().runTaskTimer(this, nationManager, 20*60*5L, 20*60*5L); // clean up task, 10min delay, 60min/time
 
         // finally, register the command
         getCommand("nation").setExecutor(new NationCommand(this));
+
+        landManager.init();
     }
 
     @Override
     public void onDisable() {
         nationManager.saveAndClear();
+        landManager.saveAndClear();
 
         instance = null;
     }

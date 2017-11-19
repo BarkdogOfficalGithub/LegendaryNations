@@ -1,6 +1,7 @@
 package org.dragonet.bukkit.lnations.data.nation;
 
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
@@ -71,7 +72,19 @@ public class Nation {
     }
 
     public void setName(String name) {
+        last_access_time = System.currentTimeMillis();
         this.name = name;
+        markChanged();
+    }
+
+    public String getDisplayName() {
+        last_access_time = System.currentTimeMillis();
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        last_access_time = System.currentTimeMillis();
+        this.displayName = displayName;
         markChanged();
     }
 
@@ -106,7 +119,7 @@ public class Nation {
      * @param player
      * @return
      */
-    public boolean isInNation(Player player) {
+    public boolean isInNation(OfflinePlayer player) {
         last_access_time = System.currentTimeMillis();
         if(leader.equals(player.getUniqueId())) return true;
         return isMember(player);
@@ -117,7 +130,7 @@ public class Nation {
      * @param player
      * @return
      */
-    public boolean isMember(Player player) {
+    public boolean isMember(OfflinePlayer player) {
         last_access_time = System.currentTimeMillis();
         return members.containsKey(player.getUniqueId());
     }
@@ -127,7 +140,7 @@ public class Nation {
      * @param player
      * @return true when changes made, false when no change
      */
-    public boolean addMember(Player player){
+    public boolean addMember(OfflinePlayer player){
         last_access_time = System.currentTimeMillis();
         if(isMember(player)) return false;
         markChanged();
@@ -145,7 +158,7 @@ public class Nation {
      * @param player
      * @return true when changes made, false when no change
      */
-    public boolean removeMember(Player player) {
+    public boolean removeMember(OfflinePlayer player) {
         last_access_time = System.currentTimeMillis();
         if(!isMember(player)) return false;
         markChanged();
@@ -206,7 +219,7 @@ public class Nation {
 
 
 
-    public boolean hasPermission(Player player, NationPermission permission) {
+    public boolean hasPermission(OfflinePlayer player, NationPermission permission) {
         last_access_time = System.currentTimeMillis();
         if(player.getUniqueId().equals(leader)) return true;
         if(generalPublicPermissions.contains(permission)) return true;
@@ -266,6 +279,8 @@ public class Nation {
         configuration.set("display-name", name);
         configuration.set("icon", default_icons[Math.abs(name.hashCode()) % default_icons.length].name());
         configuration.set("leader", leader.toString());
+        configuration.set("general-permissions.general", EmptyValues.STRING_LIST);
+        configuration.set("general-permissions.member", Arrays.asList(NationPermission.BUILD.name()));
         configuration.set("members", EmptyValues.MAP);
         configuration.set("claims", EmptyValues.MAP);
         return configuration;

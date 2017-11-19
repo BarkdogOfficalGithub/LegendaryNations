@@ -20,13 +20,15 @@ public final class Lang {
         return lang.getStringList(path);
     }
 
-    public static void sendMessage(CommandSender sender, String path, Object... args) {
-        sender.sendMessage(build("prefix") + " " + build(path, args));
+    public static void sendMessage(Object sender, String path, Object... args) {
+        if(!CommandSender.class.isAssignableFrom(sender.getClass())) return;
+        ((CommandSender)sender).sendMessage(build("prefix") + " " + build(path, args));
     }
 
-    public static void sendMessageList(CommandSender sender, String path) {
-        sender.sendMessage(build("prefix-list", build("prefix")));
-        getStringList(path).forEach((s) -> sender.sendMessage(s));
+    public static void sendMessageList(Object sender, String path) {
+        if(!CommandSender.class.isAssignableFrom(sender.getClass())) return;
+        ((CommandSender)sender).sendMessage(build("prefix-list", build("prefix")));
+        getStringList(path).forEach((s) -> ((CommandSender)sender).sendMessage(s));
     }
 
 }

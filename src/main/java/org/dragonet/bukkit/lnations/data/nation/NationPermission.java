@@ -11,6 +11,8 @@ public enum NationPermission {
 
     CHANGE_DISPLAY_NAME,
 
+    MANAGE_MEMBERS,
+
     BUILD,
 
     INTERACT,

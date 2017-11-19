@@ -6,10 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.dragonet.bukkit.lnations.Lang;
 import org.dragonet.bukkit.lnations.LegendaryNationsPlugin;
-import org.dragonet.bukkit.lnations.commands.sub.NationCreate;
-import org.dragonet.bukkit.lnations.commands.sub.NationLand;
-import org.dragonet.bukkit.lnations.commands.sub.NationManage;
-import org.dragonet.bukkit.lnations.commands.sub.NationMy;
+import org.dragonet.bukkit.lnations.commands.sub.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -34,7 +31,8 @@ public class NationCommand implements CommandExecutor {
         registerSubCommand(Arrays.asList("create", "c", "make"), new NationCreate());
         registerSubCommand(Arrays.asList("my", "me", "info", "nations", "list"), new NationMy());
         registerSubCommand(Arrays.asList("land", "lands", "claim", "unclaim", "l", "res"), new NationLand());
-        registerSubCommand(Arrays.asList("manage", "man", "gui", "control", "m"), new NationManage());
+        registerSubCommand(Arrays.asList("manage", "man", "gui", "control"), new NationManage());
+        registerSubCommand(Arrays.asList("member", "members", "mem", "m"), new NationMemberCommand());
     }
 
     private void registerSubCommand(List<String> names, NationSubCommand cmd) {

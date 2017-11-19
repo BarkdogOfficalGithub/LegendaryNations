@@ -1,5 +1,6 @@
 package org.dragonet.bukkit.lnations.data.nation;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -51,14 +52,14 @@ public final class NationManager implements Listener, Runnable {
      * @param name
      * @return null if conflicts
      */
-    public Nation createNation(String name, Player leader) {
+    public Nation createNation(String name, OfflinePlayer leader) {
         if(exists(name)) return null;
         YamlConfiguration internal = Nation.initializeNation(name, leader.getUniqueId());
         try {
             internal.save(getNationFile(name));
         } catch (IOException e) {
             e.printStackTrace();
-            leader.sendMessage("\u00a7cERROR");
+            //leader.sendMessage("\u00a7cERROR");
             return null;
         }
         plugin.getPlayerManager().addToNation(leader, name);

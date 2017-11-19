@@ -36,6 +36,20 @@ public class LandManager implements Listener {
         return worlds.get(world.getUID());
     }
 
+    public void init() {
+        for(World w : plugin.getServer().getWorlds()) {
+            if(worlds.containsKey(w.getUID())) continue;
+            File file = new File(regionsFolder,w.getName());
+            file.mkdirs();
+            worlds.put(w.getUID(), new WorldLandManager(w, plugin, file));
+        }
+    }
+
+    public void saveAndClear() {
+        worlds.values().forEach(WorldLandManager::cleanAndSave);
+        worlds.clear();
+    }
+
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     private void onWorldLoad(WorldLoadEvent e) {
         File file = new File(regionsFolder, e.getWorld().getName());

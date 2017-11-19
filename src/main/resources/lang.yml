@@ -12,14 +12,15 @@ help:
   - "\u00a7d/nation display <display name> \u00a78- \u00a73 change display name"
   - "\u00a7d/nation manage \u00a78- \u00a73opens a GUI to manage your nations"
   - "\u00a7d/nation land \u00a78- \u00a73opens a GUI to manage your lands"
-  - "\u00a7d/nation member <add/remove> <username> \u00a78- \u00a73add or remove members"
+  - "\u00a7d/nation member <nation> <add/remove> <username> \u00a78- \u00a73add or remove members"
   - "\u00a7d/nation perms <public/member> \u00a78- \u00a73manage general permissions"
   - "\u00a7d/nation perm <member username> \u00a78- \u00a73manage a member's permission"
   - "\u00a7d/nation settp \u00a78- \u00a73set nation's teleport point"
   - "\u00a7d/nation tp <nation name> \u00a78- \u00a73teleport to a nation"
 
 usage:
-  create: "\u00a7eUsage: \u00a7/nation create <name>"
+  create: "\u00a7eUsage: \u00a7d/nation create <name>"
+  member: "\u00a7eUsage: \u00a7d/nation member <nation> <add/remove> <username>"
 
 insufficient-money: "\u00a7cInsufficient money! You need \u00a7e%.2f \u00a7c. "
 
@@ -35,8 +36,8 @@ permissions:
 
 my:
   belong-to: "\u00a7eYou belong to following nations: "
-  as-member: "\u00a7\u00a7l%s "
-  as-leader: "\u00a7c\u00a7l%s\u00a78(\u00a7cleader\u00a78) "
+  as-member: "\u00a7b\u00a7l%s "
+  as-leader: "\u00a7b\u00a7l%s\u00a78(\u00a7cleader\u00a78) "
 
 creation:
   illegal-name: "\u00a7cNation names can only contains alphabets, numbers and underscores! "
@@ -69,7 +70,7 @@ manage:
           - "\u00a73Un-claiming will \u00a7cNOT \u00a73return your money! "
 
 land:
-  no-nation: "\u00a7cYou don't have a nation to manage, try \u00a7/n create"
+  no-nation: "\u00a7cYou don't have a nation to manage, try \u00a7e/n create"
   no-permission: "\u00a7cYou don't have permission to manage lands for this nation. "
   gui:
     choose-nation: "\u00a70Choose a nation"
@@ -83,3 +84,18 @@ land:
     duplicated: "\u00a7cThat land is already claimed by a nation! "
     success: "\u00a7aSuccessfully claimed land (%d, %d) for nation <\u00a7e%s\u00a7a>! "
 
+member:
+  nation-not-found: "\u00a7cNo nation named <\u00a7e%s\u00a7c>! "
+  player-not-found: "\u00a7cPlayer not found! "
+  wrong-action: "\u00a7cAction should be \u00a7eadd \u00a7cor \u00a7eremove \u00a7c! "
+  no-permission: "\u00a7cYou don't have permission to manage members of that nation! "
+  add:
+    already-exists: "\u00a7dPlayer %s is already a member of the nation! "
+    success: "\u00a7aPlayer %s added to nation %s (%s)! "
+    failed: "\u00a7cOperation somehow failed, why?? "
+    target: "\u00a7bYou've been added to nation %s (%s)"
+  remove:
+    not-member: "\u00a7cPlayer %s is not a member"
+    success: "\u00a7dPlayer %s removed from nation %s (%s)"
+    failed: "\u00a7cOperation somehow failed, why?? "
+    target: "\u00a7cYou've been removed from nation %s (%s)"
