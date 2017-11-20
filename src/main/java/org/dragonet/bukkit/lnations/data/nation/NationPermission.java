@@ -5,6 +5,16 @@ package org.dragonet.bukkit.lnations.data.nation;
  */
 public enum NationPermission {
 
+    BUILD,
+
+    INTERACT,
+
+    PVP,
+
+    MOB_DAMAGE,
+
+    HURT_ANIMALS,
+
     MANAGE_LAND,
 
     CHANGE_ICON,
@@ -13,11 +23,6 @@ public enum NationPermission {
 
     MANAGE_MEMBERS,
 
-    BUILD,
+    MANAGE_PERMISSIONS,
 
-    INTERACT,
-
-    PVP,
-
-    MOB_DAMAGE
 }

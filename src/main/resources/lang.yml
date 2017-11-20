@@ -13,8 +13,8 @@ help:
   - "\u00a7d/nation manage \u00a78- \u00a73opens a GUI to manage your nations"
   - "\u00a7d/nation land \u00a78- \u00a73opens a GUI to manage your lands"
   - "\u00a7d/nation member <nation> <add/remove> <username> \u00a78- \u00a73add or remove members"
-  - "\u00a7d/nation perms <public/member> \u00a78- \u00a73manage general permissions"
-  - "\u00a7d/nation perm <member username> \u00a78- \u00a73manage a member's permission"
+  - "\u00a7d/nation gperms <public/member> \u00a78- \u00a73manage general permissions"
+  - "\u00a7d/nation perms <member username> \u00a78- \u00a73manage a member's permission"
   - "\u00a7d/nation settp \u00a78- \u00a73set nation's teleport point"
   - "\u00a7d/nation tp <nation name> \u00a78- \u00a73teleport to a nation"
 
@@ -31,8 +31,49 @@ confirmation:
   cancelled: "\u00a7cCancelled! "
 
 permissions:
-  MANAGE_LAND: "\u00a73Allows to claim/unclaim lands for your nation"
-  BUILD: "\u00a73Allows to build and destroy blocks"
+  BUILD: "\u00a7bBuild"
+  INTERACT: "\u00a7bInteract"
+  PVP: "\u00a7bPvP"
+  MOB_DAMAGE: "\u00a7bMob Damage"
+  HURT_ANIMALS: "\u00a7bHurt Mob"
+  MANAGE_LAND: "\u00a7bManage Land"
+  CHANGE_ICON: "\u00a7bChange Icon"
+  CHANGE_DISPLAY_NAME: "\u00a7bChange Display Name"
+  MANAGE_MEMBERS: "\u00a7bManage Members"
+  MANAGE_PERMISSIONS: "\u00a7bManage Permissions"
+
+no-permission-messages:
+  BUILD: "\u00a7cThat land belongs to \u00a7b%s \u00a7c(\u00a73%s\u00a7c), you don't have build permission! "
+  INTERACT: "\u00a7cThe nation \u00a7b%s \u00a7c(\u00a73%s\u00a7c) doesn't allow you to interact with things! "
+
+permissions-lore:
+  BUILD:
+    - "\u00a73Allows to build and destroy blocks"
+  INTERACT:
+    - "\u00a73Allows to use buttons/levers/etc... "
+  PVP:
+    - "\u00a73Allows to hit other players"
+  MOB_DAMAGE:
+    - "\u00a73Allows player to be hurt by mobs. "
+  HURT_ANIMALS:
+    - "\u00a73Allows player to hurt non-hostile mobs like pigs. "
+  MANAGE_LAND:
+    - "\u00a73Allows to claim/unclaim lands for your nation"
+  CHANGE_ICON:
+    - "\u00a73Allows to change nation's icon"
+    - "\u00a73on the land map "
+  CHANGE_DISPLAY_NAME:
+    - "\u00a73Change nation's display name"
+  MANAGE_MEMBERS:
+    - "\u00a73Allows to manage nation members"
+  MANAGE_PERMISSIONS:
+    - "\u00a73Allows to manage entire nation's"
+    - "\u00a73permissions, \u00a7cBE CAUTION! "
+
+override:
+  no-permission: "\u00a7cYou have no permission to use this! "
+  turned-on: "\u00a7aAdmin override mode is ON! "
+  turned-off: "\u00a7bAdmin override mode is OFF! "
 
 my:
   belong-to: "\u00a7eYou belong to following nations: "
@@ -99,3 +140,20 @@ member:
     success: "\u00a7dPlayer %s removed from nation %s (%s)"
     failed: "\u00a7cOperation somehow failed, why?? "
     target: "\u00a7cYou've been removed from nation %s (%s)"
+
+g-perm:
+  no-nation: "\u00a7cYou don't have a nation to manage! "
+  gui:
+    active-mode: "\u00a7e(CHOSEN)"
+    public-mode: "\u00a7bGeneral Public Permissions"
+    public-mode-lore:
+      - "\u00a73Manage for public players, "
+      - "\u00a73for non-member players. "
+    member-mode: "\u00a7bGeneral Member Permissions"
+    member-mode-lore:
+      - "\u00a73Manage for all members, "
+      - "\u00a73these override member-specific permissions. "
+    choose-nation: "\u00a73Choose who and what"
+    editor-title-public: "\u00a74General Public Permissions"
+    editor-title-member: "\u00a7cGeneral Member Permissions"
+    allowed: "\u00a7a(ALLOWED)"

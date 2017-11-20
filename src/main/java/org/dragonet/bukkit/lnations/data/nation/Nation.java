@@ -217,14 +217,22 @@ public class Nation {
         return true;
     }
 
-
-
     public boolean hasPermission(OfflinePlayer player, NationPermission permission) {
         last_access_time = System.currentTimeMillis();
         if(player.getUniqueId().equals(leader)) return true;
         if(generalPublicPermissions.contains(permission)) return true;
         if(!isMember(player)) return false;
+        if(generalMemberPermissions.contains(permission)) return true;
         return members.get(player.getUniqueId()).hasPermission(permission);
+    }
+
+    public Set<NationPermission> editGeneralPermission(String mode) {
+        markChanged();
+        if(mode.equalsIgnoreCase("public")) {
+            return generalPublicPermissions;
+        } else {
+            return generalMemberPermissions;
+        }
     }
 
     public void markChanged() {
@@ -280,7 +288,7 @@ public class Nation {
         configuration.set("icon", default_icons[Math.abs(name.hashCode()) % default_icons.length].name());
         configuration.set("leader", leader.toString());
         configuration.set("general-permissions.general", EmptyValues.STRING_LIST);
-        configuration.set("general-permissions.member", Arrays.asList(NationPermission.BUILD.name()));
+        configuration.set("general-permissions.member", Arrays.asList(NationPermission.BUILD.name(), NationPermission.INTERACT.name()));
         configuration.set("members", EmptyValues.MAP);
         configuration.set("claims", EmptyValues.MAP);
         return configuration;

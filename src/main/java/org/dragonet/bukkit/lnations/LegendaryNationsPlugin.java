@@ -8,6 +8,8 @@ import org.dragonet.bukkit.lnations.commands.NationCommand;
 import org.dragonet.bukkit.lnations.data.land.LandManager;
 import org.dragonet.bukkit.lnations.data.nation.NationManager;
 import org.dragonet.bukkit.lnations.data.player.PlayerManager;
+import org.dragonet.bukkit.lnations.listeners.BuildPermissionListener;
+import org.dragonet.bukkit.lnations.listeners.InteractPermissionListener;
 import org.dragonet.bukkit.menuapi.ItemMenu;
 import org.dragonet.bukkit.menuapi.MenuAPIPlugin;
 
@@ -57,10 +59,14 @@ public class LegendaryNationsPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(landManager, this);
         getServer().getScheduler().runTaskTimer(this, nationManager, 20*60*5L, 20*60*5L); // clean up task, 10min delay, 60min/time
 
+        landManager.init();
+
+        // listeners
+        getServer().getPluginManager().registerEvents(new BuildPermissionListener(), this);
+        getServer().getPluginManager().registerEvents(new InteractPermissionListener(), this);
+
         // finally, register the command
         getCommand("nation").setExecutor(new NationCommand(this));
-
-        landManager.init();
     }
 
     @Override
