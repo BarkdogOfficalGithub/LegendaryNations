@@ -36,6 +36,7 @@ flags:
   NO_MONSTER_GRIEF: "\u00a7bNo monsters grief"
   NO_ANIMAL_SPAWNING: "\u00a7bNo animal grief"
   PVP: "\u00a7bPVP"
+  INVINCIBLE: "\u00a7bIgnore all dmages"
 
 permissions:
   BUILD: "\u00a7bBuild"
@@ -70,6 +71,9 @@ flags-lore:
   PVP:
     - "\u00a73Players will be able to "
     - "\u00a73hurt each others"
+  INVINCIBLE:
+    - "\u00a73Players will not get damages "
+    - "\u00a73getting hunger"
 
 permissions-lore:
   BUILD:
@@ -133,6 +137,11 @@ manage:
         lore:
           - "\u00a73Change a icon for your nation. "
           - "\u00a73It displays on land maps too! "
+      flags:
+        button: "\u00a7bFlags"
+        lore:
+          - "\u00a73Manage flags for the nation, "
+          - "\u00a73environmental settings. "
       manage-land:
         button: "\u00a7bManage Lands"
         lore:
@@ -199,6 +208,7 @@ g-perm:
 
 flags-cmd:
   no-nation: "\u00a7cYou don't have a nation to manage! "
+  no-permission-server: "\u00a7cYou can't set this! (no permission on server! )"
   gui:
     choose-nation: "\u00a73Choose nation"
     nation-permitted: "\u00a7a%s"

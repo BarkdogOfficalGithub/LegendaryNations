@@ -13,4 +13,7 @@ public enum NationFlag {
 
     PVP,
 
+
+    INVINCIBLE,
+
 }

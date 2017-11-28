@@ -59,7 +59,7 @@ public class NationLand implements NationSubCommand {
                     gui.setButton(guiIndex, Material.DIRT, String.format("\u00a7f(%d,%d) ", cx, cz) + Lang.build("land.gui.wilderness"), Lang.getStringList("land.gui.claim-lore"),
                             new ClaimRequestHandler(player, n, world, cx, cz));
                 } else {
-                    gui.setButton(guiIndex, landNation.getIcon(), String.format("\u00a7f(%d,%d) ", cx, cz) + "\u00a7c" + landNation.getName(), ((humanEntity, itemMenuInstance) ->
+                    gui.setButton(guiIndex, landNation.getIcon(), String.format("\u00a7f(%d,%d) \u00a76%s \u00a77(\u00a7c%s\u00a77)", cx, cz, landNation.getDisplayName(), landNation.getName()), ((humanEntity, itemMenuInstance) ->
                         Lang.sendMessage(player, "land.claim.duplicated")
                     ));
                 }

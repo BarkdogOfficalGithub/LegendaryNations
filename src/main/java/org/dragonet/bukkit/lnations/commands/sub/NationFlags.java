@@ -43,7 +43,7 @@ public class NationFlags implements NationSubCommand {
     }
 
     public static void openFlagsMenu(Player player, Nation n) {
-        ItemMenuInstance menu = new ItemMenuInstance(Lang.build("flags.gui.editor-title", n.getDisplayName()), NationFlag.values().length);
+        ItemMenuInstance menu = new ItemMenuInstance(Lang.build("flags-cmd.gui.editor-title", n.getDisplayName()), NationFlag.values().length);
         Set<NationFlag> flags = n.editFlags();
         NationFlag[] all_flags = NationFlag.values();
         for(int i = 0; i < all_flags.length; i++) {
@@ -51,6 +51,11 @@ public class NationFlags implements NationSubCommand {
             menu.setButton(i, flags.contains(current_flag) ? Material.ENCHANTED_BOOK : Material.BOOK,
                     flags.contains(all_flags[i]) ? Lang.build("flags." + current_flag.name()) + Lang.build("flags-cmd.gui.enabled") : Lang.build("flags." + current_flag.name()),
                     Lang.getStringList("flags-lore." + current_flag.name()), ((humanEntity, itemMenuInstance) -> {
+                        if(!LegendaryNationsPlugin.isInOverrideMode(player) &&
+                                !player.hasPermission("legendarynations.flags." + current_flag.name().toLowerCase())) {
+                            Lang.sendMessage(player, "flags-cmd.no-permission-server");
+                            return;
+                        }
                         if(flags.contains(current_flag)) {
                             flags.remove(current_flag);
                         } else {
@@ -60,5 +65,6 @@ public class NationFlags implements NationSubCommand {
                         openFlagsMenu(player, n);
                     }));
         }
+        LegendaryNationsPlugin.getInstance().getMenus().open(player, menu);
     }
 }

@@ -26,7 +26,7 @@ public class NationManage implements NationSubCommand {
         ItemMenuInstance menuInstance = new ItemMenuInstance(Lang.build("manage.gui.choose-nation"), nations.size());
         for(int i = 0; i < nations.size(); i++) {
             Nation n = nations.get(i);
-            menuInstance.setButton(i, n.getIcon(), n.getName(), ((humanEntity, itemMenuInstance) -> {
+            menuInstance.setButton(i, n.getIcon(), String.format("\u00a7e%s \u00a73(\u00a7b%s\u00a73)", n.getDisplayName(), n.getName()), ((humanEntity, itemMenuInstance) -> {
                 player.closeInventory();
                 openManagerMenu(player, n);
             }));
@@ -68,12 +68,12 @@ public class NationManage implements NationSubCommand {
             }));
         }
         if(nation.hasPermission(player, NationPermission.MANAGE_FLAGS)) {
-            menu.setButton(4, Material.BOOK_AND_QUILL, Lang.build("manage.gui.options.flags.button"), Lang.getStringList("manage.gui.options.flags.lore"), ((humanEntity, itemMenuInstance) -> {
+            menu.setButton(3, Material.ANVIL, Lang.build("manage.gui.options.flags.button"), Lang.getStringList("manage.gui.options.flags.lore"), ((humanEntity, itemMenuInstance) -> {
                 player.closeInventory();
                 NationFlags.openFlagsMenu(player, nation);
             }));
         } else {
-            menu.setButton(4, Material.FENCE, Lang.build("manage.gui.options.flags.button") + Lang.build("manage.no-permission-button-suffix"), Lang.getStringList("manage.gui.options.flags.lore"), ((humanEntity, itemMenuInstance) -> {
+            menu.setButton(3, Material.ANVIL, Lang.build("manage.gui.options.flags.button") + Lang.build("manage.no-permission-button-suffix"), Lang.getStringList("manage.gui.options.flags.lore"), ((humanEntity, itemMenuInstance) -> {
                 player.closeInventory();
                 Lang.sendMessage(player, "manage.no-permission");
             }));
@@ -84,7 +84,7 @@ public class NationManage implements NationSubCommand {
                 NationGPerms.openPermissionMenu(player, "public", nation);
             }));
         } else {
-            menu.setButton(4, Material.FENCE, Lang.build("manage.gui.options.gperms-public.button") + Lang.build("manage.no-permission-button-suffix"), Lang.getStringList("manage.gui.options.gperms-public.lore"), ((humanEntity, itemMenuInstance) -> {
+            menu.setButton(4, Material.BOOK, Lang.build("manage.gui.options.gperms-public.button") + Lang.build("manage.no-permission-button-suffix"), Lang.getStringList("manage.gui.options.gperms-public.lore"), ((humanEntity, itemMenuInstance) -> {
                 player.closeInventory();
                 Lang.sendMessage(player, "manage.no-permission");
             }));
@@ -95,7 +95,7 @@ public class NationManage implements NationSubCommand {
                 NationGPerms.openPermissionMenu(player, "member", nation);
             }));
         } else {
-            menu.setButton(5, Material.FENCE, Lang.build("manage.gui.options.gperms-member.button") + Lang.build("manage.no-permission-button-suffix"), Lang.getStringList("manage.gui.options.gperms-member.lore"), ((humanEntity, itemMenuInstance) -> {
+            menu.setButton(5, Material.BOOK, Lang.build("manage.gui.options.gperms-member.button") + Lang.build("manage.no-permission-button-suffix"), Lang.getStringList("manage.gui.options.gperms-member.lore"), ((humanEntity, itemMenuInstance) -> {
                 player.closeInventory();
                 Lang.sendMessage(player, "manage.no-permission");
             }));
