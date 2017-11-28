@@ -9,7 +9,7 @@ help:
   - "\u00a7d/nation my \u00a78- \u00a73see what nations you belong to"
   - "\u00a7d/nation create <name> \u00a78- \u00a73creates a nation"
   - "\u00a7d/nation icon\u00a78- \u00a73change a nation's icon"
-  - "\u00a7d/nation display <nation> <display name> \u00a78- \u00a73 change display name"
+  - "\u00a7d/nation display <nation> <display name> \u00a78- \u00a73change display name"
   - "\u00a7d/nation manage \u00a78- \u00a73opens a GUI to manage your nations"
   - "\u00a7d/nation land \u00a78- \u00a73opens a GUI to manage your lands"
   - "\u00a7d/nation member <nation> <add/remove> <username> \u00a78- \u00a73add or remove members"
