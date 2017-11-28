@@ -9,7 +9,7 @@ help:
   - "\u00a7d/nation my \u00a78- \u00a73see what nations you belong to"
   - "\u00a7d/nation create <name> \u00a78- \u00a73creates a nation"
   - "\u00a7d/nation icon\u00a78- \u00a73change a nation's icon"
-  - "\u00a7d/nation display <display name> \u00a78- \u00a73 change display name"
+  - "\u00a7d/nation display <nation> <display name> \u00a78- \u00a73 change display name"
   - "\u00a7d/nation manage \u00a78- \u00a73opens a GUI to manage your nations"
   - "\u00a7d/nation land \u00a78- \u00a73opens a GUI to manage your lands"
   - "\u00a7d/nation member <nation> <add/remove> <username> \u00a78- \u00a73add or remove members"
@@ -21,6 +21,7 @@ help:
 usage:
   create: "\u00a7eUsage: \u00a7d/nation create <name>"
   member: "\u00a7eUsage: \u00a7d/nation member <nation> <add/remove> <username>"
+  display: "\u00a7eUsage: \u00a7d/nation display <nation> <display name> \u00a78- \u00a73 change display name"
 
 insufficient-money: "\u00a7cInsufficient money! You need \u00a7e%.2f \u00a7c. "
 
@@ -110,6 +111,11 @@ creation:
     - "\u00a7aYou can now claim lands using \u00a7e/n land \u00a7a, "
     - "\u00a7aor change a icon on map using \u00a7e/n icon \u00a7a. "
 
+display:
+  not-found: "\u00a7cNation not found! "
+  no-permission: "\u00a7cYou can't change display name for this nation, ask the leader? "
+  updated: "\u00a76Nation \u00a7e%s \u00a76changed its display name to \u00a7e%s \u00a76by \u00a7b%s"
+
 manage:
   no-permission-button-suffix: "\u00a7c(no permission)"
   no-permission: "\u00a7cYou have no permission to do this to your nation. "
@@ -120,8 +126,8 @@ manage:
       change-display-name:
         button: "\u00a7bChange Display Name"
         lore:
-          - "\u00a73by using command: "
-          - "\u00a7e/n display <\u00a7ddisplay name\u00a7e>"
+          - "\u00a73use command: "
+          - "\u00a7e/n display <\u00a7dnation\u00a7e> <\u00a7ddisplay name\u00a7e>"
       change-icon:
         button: "\u00a7bChange Icon"
         lore:
@@ -132,6 +138,16 @@ manage:
         lore:
           - "\u00a73Claim lands or un-claim them. "
           - "\u00a73Un-claiming will \u00a7cNOT \u00a73return your money! "
+      gperms-public:
+        button: "\u00a7bGeneral Public Permissions"
+        lore:
+          - "\u00a73Manage general permissions"
+          - "\u00a73applied to the public(eveyrone). "
+      gperms-member:
+        button: "\u00a7bGeneral Member Permissions"
+        lore:
+          - "\u00a73Manage general permissions"
+          - "\u00a73applied to all members. "
 
 land:
   no-nation: "\u00a7cYou don't have a nation to manage, try \u00a7e/n create"

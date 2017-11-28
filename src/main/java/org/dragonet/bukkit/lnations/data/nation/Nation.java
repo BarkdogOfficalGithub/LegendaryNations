@@ -172,6 +172,16 @@ public class Nation {
         return true;
     }
 
+    public List<Player> getAllOnlineMembersAsPlayers() {
+        org.bukkit.Server server = LegendaryNationsPlugin.getInstance().getServer();
+        List<Player> players = new ArrayList<>();
+        for(UUID uuid : members.keySet()){
+            Player p = server.getPlayer(uuid);
+            if(p != null) players.add(p);
+        }
+        return Collections.unmodifiableList(players);
+    }
+
     public boolean checkLand(World world, int chunkX, int chunkZ) {
         last_access_time = System.currentTimeMillis();
         markChanged();

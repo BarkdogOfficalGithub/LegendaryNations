@@ -30,6 +30,7 @@ public class NationCommand implements CommandExecutor {
     private void init() {
         registerSubCommand(Arrays.asList("create", "c", "make"), new NationCreate());
         registerSubCommand(Arrays.asList("my", "me", "info", "nations", "list"), new NationMy());
+        registerSubCommand(Arrays.asList("display", "disp", "dp", "dispname", "dname"), new NationDisplay());
         registerSubCommand(Arrays.asList("land", "lands", "claim", "unclaim", "l", "res"), new NationLand());
         registerSubCommand(Arrays.asList("manage", "man", "gui", "control"), new NationManage());
         registerSubCommand(Arrays.asList("member", "members", "mem", "m"), new NationMemberCommand());

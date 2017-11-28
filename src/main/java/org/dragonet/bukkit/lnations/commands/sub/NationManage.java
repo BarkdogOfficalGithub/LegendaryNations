@@ -39,7 +39,7 @@ public class NationManage implements NationSubCommand {
         if(nation.hasPermission(player, NationPermission.CHANGE_DISPLAY_NAME)) {
             menu.setButton(0, Material.PAPER, Lang.build("manage.gui.options.change-display-name.button"), Lang.getStringList("manage.gui.options.change-display-name.lore"), ((humanEntity, itemMenuInstance) -> {
                 player.closeInventory();
-
+                Lang.sendMessageList(player, "manage.gui.options.change-display-name.lore");
             }));
         } else {
             menu.setButton(0, Material.PAPER, Lang.build("manage.gui.options.change-display-name.button") + Lang.build("manage.no-permission-button-suffix"), Lang.getStringList("manage.gui.options.change-display-name.lore"), ((humanEntity, itemMenuInstance) -> {
@@ -63,6 +63,39 @@ public class NationManage implements NationSubCommand {
             }));
         } else {
             menu.setButton(2, Material.FENCE, Lang.build("manage.gui.options.manage-land.button") + Lang.build("manage.no-permission-button-suffix"), Lang.getStringList("manage.gui.options.manage-land.lore"), ((humanEntity, itemMenuInstance) -> {
+                player.closeInventory();
+                Lang.sendMessage(player, "manage.no-permission");
+            }));
+        }
+        if(nation.hasPermission(player, NationPermission.MANAGE_FLAGS)) {
+            menu.setButton(4, Material.BOOK_AND_QUILL, Lang.build("manage.gui.options.flags.button"), Lang.getStringList("manage.gui.options.flags.lore"), ((humanEntity, itemMenuInstance) -> {
+                player.closeInventory();
+                NationFlags.openFlagsMenu(player, nation);
+            }));
+        } else {
+            menu.setButton(4, Material.FENCE, Lang.build("manage.gui.options.flags.button") + Lang.build("manage.no-permission-button-suffix"), Lang.getStringList("manage.gui.options.flags.lore"), ((humanEntity, itemMenuInstance) -> {
+                player.closeInventory();
+                Lang.sendMessage(player, "manage.no-permission");
+            }));
+        }
+        if(nation.hasPermission(player, NationPermission.MANAGE_PERMISSIONS)) {
+            menu.setButton(4, Material.BOOK_AND_QUILL, Lang.build("manage.gui.options.gperms-public.button"), Lang.getStringList("manage.gui.options.gperms-public.lore"), ((humanEntity, itemMenuInstance) -> {
+                player.closeInventory();
+                NationGPerms.openPermissionMenu(player, "public", nation);
+            }));
+        } else {
+            menu.setButton(4, Material.FENCE, Lang.build("manage.gui.options.gperms-public.button") + Lang.build("manage.no-permission-button-suffix"), Lang.getStringList("manage.gui.options.gperms-public.lore"), ((humanEntity, itemMenuInstance) -> {
+                player.closeInventory();
+                Lang.sendMessage(player, "manage.no-permission");
+            }));
+        }
+        if(nation.hasPermission(player, NationPermission.MANAGE_PERMISSIONS)) {
+            menu.setButton(5, Material.BOOK_AND_QUILL, Lang.build("manage.gui.options.gperms-member.button"), Lang.getStringList("manage.gui.options.gperms-member.lore"), ((humanEntity, itemMenuInstance) -> {
+                player.closeInventory();
+                NationGPerms.openPermissionMenu(player, "member", nation);
+            }));
+        } else {
+            menu.setButton(5, Material.FENCE, Lang.build("manage.gui.options.gperms-member.button") + Lang.build("manage.no-permission-button-suffix"), Lang.getStringList("manage.gui.options.gperms-member.lore"), ((humanEntity, itemMenuInstance) -> {
                 player.closeInventory();
                 Lang.sendMessage(player, "manage.no-permission");
             }));

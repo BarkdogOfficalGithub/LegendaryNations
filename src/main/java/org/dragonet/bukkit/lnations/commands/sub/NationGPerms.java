@@ -31,7 +31,7 @@ public class NationGPerms implements NationSubCommand {
         updateModeButtons(menu);
         for(int i = 0; i < nations.size(); i++) {
             Nation n = nations.get(i);
-            if(n.hasPermission(player, NationPermission.MANAGE_LAND)) {
+            if(n.hasPermission(player, NationPermission.MANAGE_PERMISSIONS)) {
                 menuInstance.setButton(i + 9, n.getIcon(), n.getName(), Arrays.asList("\u00a73" + n.getDisplayName()), ((humanEntity, itemMenuInstance) -> {
                     player.closeInventory();
                     openPermissionMenu(player, menu.mode, n);
