@@ -9,7 +9,8 @@ import org.dragonet.bukkit.lnations.data.land.LandManager;
 import org.dragonet.bukkit.lnations.data.nation.NationManager;
 import org.dragonet.bukkit.lnations.data.player.PlayerManager;
 import org.dragonet.bukkit.lnations.listeners.BuildPermissionListener;
-import org.dragonet.bukkit.lnations.listeners.InteractPermissionListener;
+import org.dragonet.bukkit.lnations.listeners.InteractionListener;
+import org.dragonet.bukkit.lnations.listeners.CreatureFlagsListener;
 import org.dragonet.bukkit.menuapi.ItemMenu;
 import org.dragonet.bukkit.menuapi.MenuAPIPlugin;
 
@@ -63,7 +64,8 @@ public class LegendaryNationsPlugin extends JavaPlugin {
 
         // listeners
         getServer().getPluginManager().registerEvents(new BuildPermissionListener(), this);
-        getServer().getPluginManager().registerEvents(new InteractPermissionListener(), this);
+        getServer().getPluginManager().registerEvents(new InteractionListener(), this);
+        getServer().getPluginManager().registerEvents(new CreatureFlagsListener(), this);
 
         // finally, register the command
         getCommand("nation").setExecutor(new NationCommand(this));

@@ -31,6 +31,8 @@ public class Nation {
 
     private UUID leader;
 
+    private final Set<NationFlag> flags = new HashSet<>();
+
     /**
      * general public permissions override general member permissions
      */
@@ -59,6 +61,7 @@ public class Nation {
         generalMemberPermissions = new HashSet<>();
         generalPublicPermissions.addAll(internalConfiguration.getStringList("general-permissions.public").stream().map(NationPermission::valueOf).collect(Collectors.toList()));
         generalMemberPermissions.addAll(internalConfiguration.getStringList("general-permissions.member").stream().map(NationPermission::valueOf).collect(Collectors.toList()));
+        flags.addAll(internalConfiguration.getStringList("flags").stream().map(NationFlag::valueOf).collect(Collectors.toList()));
         for(String strUniqueId : internalConfiguration.getConfigurationSection("members").getKeys(false)) {
             NationMember member = new NationMember(this, internalConfiguration.getConfigurationSection("members." + strUniqueId), UUID.fromString(strUniqueId));
             members.put(UUID.fromString(strUniqueId), member);
@@ -170,9 +173,29 @@ public class Nation {
     }
 
     public boolean checkLand(World world, int chunkX, int chunkZ) {
+        last_access_time = System.currentTimeMillis();
+        markChanged();
         String key = claimKey(world, chunkX, chunkZ);
         if(!claims.contains(key)) return false;
         return true;
+    }
+
+    public Set<NationFlag> editFlags() {
+        markChanged();
+        return flags;
+    }
+
+    public boolean hasFlag(NationFlag flag) {
+        last_access_time = System.currentTimeMillis();
+        return flags.contains(flag);
+    }
+
+    public void setFlag(NationFlag flag, boolean enable) {
+        if(enable) {
+            flags.add(flag);
+        } else {
+            flags.remove(flag);
+        }
     }
 
     /**
@@ -258,8 +281,10 @@ public class Nation {
         });
         List<String> generalPublicPermissionStrings = generalPublicPermissions.stream().map(Enum::name).collect(Collectors.toCollection(LinkedList::new));
         List<String> generalMemberPermissionStrings = generalMemberPermissions.stream().map(Enum::name).collect(Collectors.toCollection(LinkedList::new));
+        List<String> flagsStrings = flags.stream().map(Enum::name).collect(Collectors.toCollection(LinkedList::new));
         internalConfiguration.set("general-permissions.public", generalPublicPermissionStrings);
         internalConfiguration.set("general-permissions.member", generalMemberPermissionStrings);
+        internalConfiguration.set("flags", flagsStrings);
         internalConfiguration.set("claims", claims);
         try {
             internalConfiguration.save(internalFile);
@@ -289,6 +314,10 @@ public class Nation {
         configuration.set("leader", leader.toString());
         configuration.set("general-permissions.general", EmptyValues.STRING_LIST);
         configuration.set("general-permissions.member", Arrays.asList(NationPermission.BUILD.name(), NationPermission.INTERACT.name()));
+        configuration.set("flags", Arrays.asList(
+                NationFlag.NO_MONSTER_SPAWNING.name(),
+                NationFlag.NO_MONSTER_GRIEF.name()
+        ));
         configuration.set("members", EmptyValues.MAP);
         configuration.set("claims", EmptyValues.MAP);
         return configuration;

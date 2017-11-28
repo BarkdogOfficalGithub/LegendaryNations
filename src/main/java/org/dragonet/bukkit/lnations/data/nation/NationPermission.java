@@ -9,13 +9,11 @@ public enum NationPermission {
 
     INTERACT,
 
-    PVP,
-
-    MOB_DAMAGE,
-
     HURT_ANIMALS,
 
     MANAGE_LAND,
+
+    MANAGE_FLAGS,
 
     CHANGE_ICON,
 

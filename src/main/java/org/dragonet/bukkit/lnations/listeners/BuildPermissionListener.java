@@ -10,9 +10,6 @@ import org.dragonet.bukkit.lnations.data.land.WorldLandManager;
 import org.dragonet.bukkit.lnations.data.nation.Nation;
 import org.dragonet.bukkit.lnations.data.nation.NationPermission;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.dragonet.bukkit.lnations.listeners.EventHelper.shouldCancel;
 
 /**

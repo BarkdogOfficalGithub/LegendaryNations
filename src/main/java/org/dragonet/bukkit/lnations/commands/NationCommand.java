@@ -35,6 +35,7 @@ public class NationCommand implements CommandExecutor {
         registerSubCommand(Arrays.asList("member", "members", "mem", "m"), new NationMemberCommand());
         registerSubCommand(Arrays.asList("gperms", "gperm", "genperms", "gp"), new NationGPerms());
         registerSubCommand(Arrays.asList("override", "admin", "or", "ignore"), new NationOverride());
+        registerSubCommand(Arrays.asList("flags", "flag", "f", "set"), new NationFlags());
     }
 
     private void registerSubCommand(List<String> names, NationSubCommand cmd) {

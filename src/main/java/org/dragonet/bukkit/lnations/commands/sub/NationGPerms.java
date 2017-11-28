@@ -1,7 +1,6 @@
 package org.dragonet.bukkit.lnations.commands.sub;
 
 import org.bukkit.Material;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.dragonet.bukkit.lnations.Lang;
 import org.dragonet.bukkit.lnations.LegendaryNationsPlugin;
@@ -29,7 +28,7 @@ public class NationGPerms implements NationSubCommand {
         }
         ItemMenuInstance menuInstance = new ItemMenuInstance(Lang.build("g-perm.gui.choose-nation"), nations.size() + 9);
         ItemMenuWithMode menu = new ItemMenuWithMode(menuInstance, "member");
-        updateButtons(menu);
+        updateModeButtons(menu);
         for(int i = 0; i < nations.size(); i++) {
             Nation n = nations.get(i);
             if(n.hasPermission(player, NationPermission.MANAGE_LAND)) {
@@ -42,7 +41,7 @@ public class NationGPerms implements NationSubCommand {
         LegendaryNationsPlugin.getInstance().getMenus().open(player, menuInstance);
     }
 
-    private void openPermissionMenu(Player player, String mode, Nation nation) {
+    public static void openPermissionMenu(Player player, String mode, Nation nation) {
         Set<NationPermission> perms = nation.editGeneralPermission(mode);
         ItemMenuInstance menu = new ItemMenuInstance(Lang.build("g-perm.gui.editor-title-" + mode.toLowerCase()), NationPermission.values().length);
         for(int i = 0; i < NationPermission.values().length; i++) {
@@ -62,7 +61,7 @@ public class NationGPerms implements NationSubCommand {
         LegendaryNationsPlugin.getInstance().getMenus().open(player, menu);
     }
 
-    private void updateButtons(ItemMenuWithMode menu) {
+    private static void updateModeButtons(ItemMenuWithMode menu) {
         for(int i : Arrays.asList(0, 1, 3, 4, 5, 7, 8)) {
             ItemMenu.MenuItemHandler emptyHandler = (humanEntity, itemMenuInstance) -> {};
             menu.instance.setButton(i, Material.STAINED_GLASS_PANE, "", emptyHandler);
@@ -74,7 +73,7 @@ public class NationGPerms implements NationSubCommand {
                 ((humanEntity, itemMenuInstance) -> {
                     if(!menu.mode.equals("member")) {
                         menu.mode = "member";
-                        updateButtons(menu);
+                        updateModeButtons(menu);
                     }
                 }));
         menu.instance.setButton(6,
@@ -84,7 +83,7 @@ public class NationGPerms implements NationSubCommand {
                 ((humanEntity, itemMenuInstance) -> {
                     if(!menu.mode.equals("public")) {
                         menu.mode = "public";
-                        updateButtons(menu);
+                        updateModeButtons(menu);
                     }
                 }));
     }

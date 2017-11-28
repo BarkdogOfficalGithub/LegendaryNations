@@ -30,35 +30,58 @@ confirmation:
   option-no: "\u00a7cNO"
   cancelled: "\u00a7cCancelled! "
 
+flags:
+  NO_MONSTER_SPAWNING: "\u00a7bNo monsters spawning"
+  NO_MONSTER_GRIEF: "\u00a7bNo monsters grief"
+  NO_ANIMAL_SPAWNING: "\u00a7bNo animal grief"
+  PVP: "\u00a7bPVP"
+
 permissions:
   BUILD: "\u00a7bBuild"
   INTERACT: "\u00a7bInteract"
-  PVP: "\u00a7bPvP"
-  MOB_DAMAGE: "\u00a7bMob Damage"
   HURT_ANIMALS: "\u00a7bHurt Mob"
   MANAGE_LAND: "\u00a7bManage Land"
+  MANAGE_FLAGS: "\u00a7bManage Flags"
   CHANGE_ICON: "\u00a7bChange Icon"
   CHANGE_DISPLAY_NAME: "\u00a7bChange Display Name"
   MANAGE_MEMBERS: "\u00a7bManage Members"
   MANAGE_PERMISSIONS: "\u00a7bManage Permissions"
 
+# only listed is used, others don't have messages
+flag-messages:
+  PVP: "\u00a7cPvP is disallowed in nation \u00a7b%s \u00a7c(\u00a73%s\u00a7c)! "
+
 no-permission-messages:
   BUILD: "\u00a7cThat land belongs to \u00a7b%s \u00a7c(\u00a73%s\u00a7c), you don't have build permission! "
   INTERACT: "\u00a7cThe nation \u00a7b%s \u00a7c(\u00a73%s\u00a7c) doesn't allow you to interact with things! "
+  HURT_ANIMALS: "\u00a7cThe nation \u00a7b%s \u00a7c(\u00a73%s\u00a7c) doesn't allow you to hurt animals! "
+
+flags-lore:
+  NO_MONSTER_SPAWNING:
+    - "\u00a73Prevent monsters spawning "
+    - "\u00a73in your lands"
+  NO_MONSTER_GRIEF:
+    - "\u00a73Monsters will not be "
+    - "\u00a73able to break blocks, "
+    - "\u00a73such as enderman"
+  NO_ANIMAL_SPAWNING:
+    - "\u00a73Animals won't spawn"
+  PVP:
+    - "\u00a73Players will be able to "
+    - "\u00a73hurt each others"
 
 permissions-lore:
   BUILD:
     - "\u00a73Allows to build and destroy blocks"
   INTERACT:
     - "\u00a73Allows to use buttons/levers/etc... "
-  PVP:
-    - "\u00a73Allows to hit other players"
-  MOB_DAMAGE:
-    - "\u00a73Allows player to be hurt by mobs. "
   HURT_ANIMALS:
     - "\u00a73Allows player to hurt non-hostile mobs like pigs. "
   MANAGE_LAND:
     - "\u00a73Allows to claim/unclaim lands for your nation"
+  MANAGE_FLAGS:
+    - "\u00a73Allows to change flags for your nation. "
+    - "\u00a73Flags are environmental settings for your lands. "
   CHANGE_ICON:
     - "\u00a73Allows to change nation's icon"
     - "\u00a73on the land map "
@@ -157,3 +180,12 @@ g-perm:
     editor-title-public: "\u00a74General Public Permissions"
     editor-title-member: "\u00a7cGeneral Member Permissions"
     allowed: "\u00a7a(ALLOWED)"
+
+flags-cmd:
+  no-nation: "\u00a7cYou don't have a nation to manage! "
+  gui:
+    choose-nation: "\u00a73Choose nation"
+    nation-permitted: "\u00a7a%s"
+    nation-unavailable: "\u00a78%s (\u00a7cno permission\u00a78)"
+    editor-title: "\u00a70Nation Flags for \u00a7e%s"
+    enabled: "\u00a7a(ENABLED)"

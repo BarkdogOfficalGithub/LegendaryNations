@@ -7,6 +7,7 @@ import org.dragonet.bukkit.lnations.Lang;
 import org.dragonet.bukkit.lnations.LegendaryNationsPlugin;
 import org.dragonet.bukkit.lnations.data.land.WorldLandManager;
 import org.dragonet.bukkit.lnations.data.nation.Nation;
+import org.dragonet.bukkit.lnations.data.nation.NationFlag;
 import org.dragonet.bukkit.lnations.data.nation.NationPermission;
 
 /**
@@ -34,6 +35,17 @@ public class EventHelper {
         if(n.hasPermission(player, permission)) return false;
         Lang.sendMessage(player, "no-permission-messages." + permission.name(), n.getDisplayName(), n.getName());
         return true;
+    }
+
+    public static boolean hasFlagSet(World world, Chunk chunk, NationFlag flag) {
+        // override mode
+        int chunkX = chunk.getX();
+        int chunkZ = chunk.getZ();
+        WorldLandManager wlm = LegendaryNationsPlugin.getInstance().getLandManager().getWorldManager(world);
+        Nation n = wlm.getNationAt(chunkX, chunkZ);
+        if(n == null) return false;
+        if(n.hasFlag(flag)) return true;
+        return false;
     }
 
 }
