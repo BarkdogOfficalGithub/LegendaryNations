@@ -34,7 +34,7 @@ confirmation:
 flags:
   NO_MONSTER_SPAWNING: "\u00a7bNo monsters spawning"
   NO_MONSTER_GRIEF: "\u00a7bNo monsters grief"
-  NO_ANIMAL_SPAWNING: "\u00a7bNo animal grief"
+  NO_ANIMAL_SPAWNING: "\u00a7bNo animal spawning"
   PVP: "\u00a7bPVP"
   INVINCIBLE: "\u00a7bIgnore all dmages"
 
